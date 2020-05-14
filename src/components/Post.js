@@ -1,10 +1,13 @@
 import React from 'react';
 import {StyleSheet, View, Image, Dimensions} from 'react-native';
 
+import Autor from './Autor';
+
 export default (props) => {
   return (
     <View style={styles.container}>
       <Image source={props.image} style={styles.image}></Image>
+      <Autor nickname="Geraldo Vitor"></Autor>
     </View>
   );
 };
