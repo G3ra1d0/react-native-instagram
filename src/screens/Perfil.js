@@ -1,8 +1,12 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 
-export default () => {
-  sair = () => {};
+export default (props) => {
+
+  sair = async () => {
+    await props.route.params.setRota('Login');
+    props.navigation.navigate('Login');
+  };
 
   return (
     <View style={styles.container}>
