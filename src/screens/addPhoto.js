@@ -10,10 +10,13 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
-
+import {useDispatch, useSelector} from 'react-redux';
+import {addPost} from '../store/actions/post';
 import ImagePicker from 'react-native-image-picker';
 
 export default () => {
+  const dispath = useDispatch();
+  const user = useSelector(({user}) => user);
   const [image, setImage] = useState(null);
   const [comentario, setComentario] = useState();
 
@@ -33,7 +36,30 @@ export default () => {
   };
 
   save = async () => {
-    Alert.alert('Imagem foi adicionada!', comentario);
+    if (user.name) {
+      try {
+        await dispath(
+          addPost({
+            id: Math.random(),
+            nickname: user.name,
+            avata: user.photoUrl,
+            image: image,
+            comentarios: comentario
+              ? [{nickname: user.name, comentario: comentario}]
+              : [],
+          }),
+        );
+        setImage(null);
+        setComentario(null);
+        Alert.alert('Imagem Inserida com sucesso!');
+      } catch (e) {
+        Alert.alert(
+          'Desculpe aconteceu erro ao enserir Post, tente novamente mais tarde!',
+        );
+      }
+    } else {
+      Alert.alert('Por favor faça login antes de posta uma foto!');
+    }
   };
 
   return (
