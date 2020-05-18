@@ -1,8 +1,8 @@
-import {ADD_POST} from '../actions/actionsType';
+import {ADD_POST, ADD_COMMENT} from '../actions/actionsType';
 
 const initialState = [
   {
-    id: Math.random(),
+    id: 1,
     nickname: 'Igor Matheus',
     avata:
       'https://scontent.frec8-1.fna.fbcdn.net/v/t1.0-9/95832098_1671900092963429_189258781870260224_o.jpg?_nc_cat=102&_nc_sid=09cbfe&_nc_oc=AQnCRzXmQAkz47SCCTzB247Y_jRPlryuxtHOQhYMZ7isvduUGVQzO5VaxD2Lxgal0v-8w9MxaI-BhWT1KfxQ7YtS&_nc_ht=scontent.frec8-1.fna&oh=b66731e28c51eed77b2405c97987cd7d&oe=5EE519A1',
@@ -49,6 +49,20 @@ const reducer = (state = initialState, action) => {
           ...action.payload,
         },
         ...state,
+      ];
+    case ADD_COMMENT:
+      return [
+        ...state,
+        state.map((e) => {
+          if (e.id === action.payload.postID) {
+            e.comentarios.push({
+              nickname: action.payload.nickname,
+              comentario: action.payload.comentario,
+            });
+
+            return e;
+          }
+        }),
       ];
     default:
       return state;

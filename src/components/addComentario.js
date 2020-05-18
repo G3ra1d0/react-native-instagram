@@ -7,16 +7,31 @@ import {
   TouchableWithoutFeedback,
   Alert,
 } from 'react-native';
-
+import {useDispatch, useSelector} from 'react-redux';
+import {addComment} from '../store/actions/post';
 import Icon from 'react-native-vector-icons/FontAwesome';
 Icon.loadFont();
 
-export default () => {
+export default (props) => {
+  const user = useSelector(({user}) => user);
+  const dispatch = useDispatch();
   const [comentario, setComentario] = useState();
   const [statusComentario, setStatusComentario] = useState(false);
 
   newComentario = () => {
-    Alert.alert('Adicionado!', comentario);
+    if (user.name) {
+      dispatch(
+        addComment({
+          postID: props.postID,
+          nickname: user.name,
+          comentario: comentario,
+        }),
+      );
+      Alert.alert('Comentario inserido com sucesso!', comentario);
+      setComentario(null);
+    } else {
+      Alert.alert('Por favor faça login para poder comenta!');
+    }
   };
 
   ViewComentario = () => {
@@ -62,6 +77,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 10,
+    marginBottom: 25,
   },
   caption: {
     marginLeft: 10,
@@ -69,6 +85,6 @@ const styles = StyleSheet.create({
     color: '#ccc',
   },
   input: {
-    width: '90%',
+    width: '85%',
   },
 });

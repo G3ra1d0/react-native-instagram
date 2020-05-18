@@ -11,7 +11,7 @@ export default (props) => {
       <Image source={props.image} style={styles.image}></Image>
       <Autor nickname={props.nickname} avata={props.avata}></Autor>
       <Comentarios comentarios={props.comentarios}></Comentarios>
-      <AddComentario></AddComentario>
+      <AddComentario postID={props.id}></AddComentario>
     </View>
   );
 };
