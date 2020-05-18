@@ -7,11 +7,24 @@ import {
   TextInput,
 } from 'react-native';
 
-export default (props) => {
+import {useDispatch} from 'react-redux';
+import {login as loginAction} from '../store/actions/user';
+
+export default Login = (props) => {
+  const dispatch = useDispatch();
+
   const [email, setEmail] = useState();
   const [senha, setSenha] = useState();
 
   login = async () => {
+    dispatch(
+      loginAction({
+        name: 'geraldo',
+        email: email,
+        photoUrl:
+          'https://scontent.frec7-1.fna.fbcdn.net/v/t1.0-9/53794407_2599815560035657_6322269912152670208_n.jpg?_nc_cat=103&_nc_sid=09cbfe&_nc_oc=AQnU_kOuExtf3wDiJdf5qSI_6r4usdTTZgUV6IBfYi-aZjYP78fVJfp_5lVGOz7Yymz4h1RTqpyvTfWP1NN77WCv&_nc_ht=scontent.frec7-1.fna&oh=6c33d7a309f9fdc0d1a0cf6792154603&oe=5EE4316C',
+      }),
+    );
     await props.route.params.setRota('Perfil');
     props.navigation.navigate('Perfil');
   };

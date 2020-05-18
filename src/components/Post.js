@@ -9,7 +9,7 @@ export default (props) => {
   return (
     <View style={styles.container}>
       <Image source={props.image} style={styles.image}></Image>
-      <Autor nickname="Geraldo Vitor"></Autor>
+      <Autor nickname={props.nickname} avata={props.avata}></Autor>
       <Comentarios comentarios={props.comentarios}></Comentarios>
       <AddComentario></AddComentario>
     </View>
@@ -19,6 +19,7 @@ export default (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: -20,
   },
   image: {
     width: Dimensions.get('window').width,

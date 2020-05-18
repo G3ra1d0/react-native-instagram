@@ -1,9 +1,14 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
+import {login as loginAction} from '../store/actions/user';
 
 export default (props) => {
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   sair = async () => {
+    dispatch(loginAction({name: null, email: null}));
     await props.route.params.setRota('Login');
     props.navigation.navigate('Login');
   };
@@ -12,12 +17,11 @@ export default (props) => {
     <View style={styles.container}>
       <Image
         source={{
-          uri:
-            'https://scontent.frec7-1.fna.fbcdn.net/v/t1.0-9/53794407_2599815560035657_6322269912152670208_n.jpg?_nc_cat=103&_nc_sid=09cbfe&_nc_oc=AQnU_kOuExtf3wDiJdf5qSI_6r4usdTTZgUV6IBfYi-aZjYP78fVJfp_5lVGOz7Yymz4h1RTqpyvTfWP1NN77WCv&_nc_ht=scontent.frec7-1.fna&oh=6c33d7a309f9fdc0d1a0cf6792154603&oe=5EE4316C',
+          uri: user.photoUrl,
         }}
         style={styles.image}></Image>
-      <Text style={styles.nickname}>Geraldo Vitor</Text>
-      <Text style={styles.email}>geraldovitor901@gmail.com</Text>
+      <Text style={styles.nickname}>{user.name}</Text>
+      <Text style={styles.email}>{user.email}</Text>
       <TouchableOpacity onPress={sair} style={styles.button}>
         <Text style={styles.buttonText}>Sair</Text>
       </TouchableOpacity>
